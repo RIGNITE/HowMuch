@@ -62,11 +62,6 @@ export default function Home() {
   //   getExchangeRates();
   // }, [fromCurrency]);
 
-  // useEffect(() => {
-  //    console.log(amount * 10);
-  //    console.log(fromCurrency);
-  // }, [fromCurrency, amount]);
-
   return (
     <div class="flex items-center my-5 flex-col">
       <div class="flex items-center flex-col max-w-2xl">
@@ -78,16 +73,16 @@ export default function Home() {
         <div class="flex gap-4 w-full">
           {/* First container for currency to convert */}
           <div class="rounded-md border-inherit w-1/2 flex flex-col p-2 bg-slate-950 h-auto">
-            <p class="">From currency</p>
+            <p>From Currency</p>
             <input
               placeholder={0}
               value={amount}
               onChange={handleAmountInput}
               type="number"
-              class="bg-inherit text-5xl border-0 text-emerald-500 outline-none"
+              class="bg-inherit text-6xl border-0 text-emerald-500 outline-none text-center grow"
             />
             <select
-              class="bg-inherit border-0 outline-none max-w-16"
+              class="bg-inherit border-0 outline-none max-w-16 self-end mt-auto"
               onChange={(e) => setFromCurrency(e.target.value)}
             >
               {Object.keys(exchangeRates).map((exchangeRate) => (
@@ -102,11 +97,11 @@ export default function Home() {
             </select>
           </div>
           {/* Second container displaying all currency conversions */}
-          <div class="w-1/2 p-1 rounded-md bg-slate-950">
+          <div class="w-1/2 p-2 rounded-md bg-slate-950">
             <p>To Currency</p>
             {toCurrency.map((currency, i) => (
               <div key={i} class="flex gap-2 bg-inherit">
-                <p class="text-green-400 font-bold">
+                <p class="text-green-400 font-bold text-xl">
                   {Math.round(
                     !amount ? 0 : amount * exchangeRates[currency].value * 100
                   ) / 100}
