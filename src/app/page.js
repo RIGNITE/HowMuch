@@ -34,27 +34,38 @@ export default function Home() {
       code: "JPY",
       value: 114.12,
     },
+    CAD: {
+      code: "CAD",
+      value: 1,
+    },
   });
 
   const handleAmountInput = (e) => {
     setAmount(e.target.value);
-    console.log(amount);
+    // console.log(amount);
   };
 
-  const getExchangeRates = async () => {
-    const client = new CurrencyAPI(currency_api);
-    const response = await client.latest({ base_currency: fromCurrency });
-    setExchangeRates(response.data);
-    console.log(response.data);
+  const currencyChange = (e, i) => {
+    const newToCurrency = [...toCurrency];
+    newToCurrency[i] = e.target.value;
+    setToCurrency(newToCurrency);
   };
 
   // useEffect(() => {
-  //   getExchangeRates();
-  // }, [fromCurrency, getExchangeRates]);
+  //   const getExchangeRates = async () => {
+  //     const client = new CurrencyAPI(currency_api);
+  //     const response = await client.latest({ base_currency: fromCurrency });
+  //     setExchangeRates(response.data);
+  //     console.log(response.data);
+  //   };
 
-  useEffect(() => {
-    console.log(fromCurrency * 10);
-  }, [fromCurrency]);
+  //   getExchangeRates();
+  // }, [fromCurrency]);
+
+  // useEffect(() => {
+  //    console.log(amount * 10);
+  //    console.log(fromCurrency);
+  // }, [fromCurrency, amount]);
 
   return (
     <div class="flex items-center my-5 flex-col">
@@ -75,26 +86,45 @@ export default function Home() {
               type="number"
               class="bg-inherit text-5xl border-0 text-emerald-500 outline-none"
             />
-            <select class="bg-inherit border-0 outline-none max-w-16">
-              <option value="CAD">CAD</option>
-              <option value="USD">USD</option>
-              <option value="JPY">YEN</option>
-              <option value="EUR">EUR</option>
-              <option value="GBP">GBP</option>
-              <option value="KRW">WON</option>
+            <select
+              class="bg-inherit border-0 outline-none max-w-16"
+              onChange={(e) => setFromCurrency(e.target.value)}
+            >
+              {Object.keys(exchangeRates).map((exchangeRate) => (
+                <option
+                  key={exchangeRate}
+                  value={exchangeRate}
+                  selected={exchangeRate === fromCurrency}
+                >
+                  {exchangeRate}
+                </option>
+              ))}
             </select>
           </div>
           {/* Second container displaying all currency conversions */}
-          <div class="w-1/2 border p-1 rounded-md">
+          <div class="w-1/2 p-1 rounded-md bg-slate-950">
             <p>To Currency</p>
-            {toCurrency.map((currency) => (
-              <div key={currency} class="flex gap-2">
+            {toCurrency.map((currency, i) => (
+              <div key={i} class="flex gap-2 bg-inherit">
                 <p class="text-green-400 font-bold">
                   {Math.round(
                     !amount ? 0 : amount * exchangeRates[currency].value * 100
                   ) / 100}
                 </p>
-                <p>{currency}</p>
+                <select
+                  class="bg-inherit border-0 outline-none max-w-16"
+                  onChange={(event) => currencyChange(event, i)}
+                >
+                  {Object.keys(exchangeRates).map((exchangeRate) => (
+                    <option
+                      key={exchangeRate}
+                      value={exchangeRate}
+                      selected={exchangeRate === currency}
+                    >
+                      {exchangeRate}
+                    </option>
+                  ))}
+                </select>
               </div>
             ))}
           </div>
