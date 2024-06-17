@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { currency_api } from "../../currency_api";
 import CurrencyAPI from "@everapi/currencyapi-js";
+import CurrencyFlag from "react-currency-flags";
 
 export default function Home() {
   const [amount, setAmount] = useState();
@@ -74,6 +75,7 @@ export default function Home() {
           {/* First container for currency to convert */}
           <div class="rounded-md border-inherit w-1/2 flex flex-col p-2 bg-slate-950 h-auto">
             <p>From Currency</p>
+            <CurrencyFlag currency={fromCurrency} />
             <input
               placeholder={0}
               value={amount}
@@ -106,6 +108,7 @@ export default function Home() {
                     !amount ? 0 : amount * exchangeRates[currency].value * 100
                   ) / 100}
                 </p>
+                <CurrencyFlag currency={currency} />
                 <select
                   class="bg-inherit border-0 outline-none max-w-16"
                   onChange={(event) => currencyChange(event, i)}
