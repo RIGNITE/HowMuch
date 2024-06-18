@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { currency_api } from "../../currency_api";
 import CurrencyAPI from "@everapi/currencyapi-js";
 import CurrencyFlag from "react-currency-flags";
+import Select from "react-select";
 
 export default function Home() {
   const [amount, setAmount] = useState();
@@ -41,26 +42,155 @@ export default function Home() {
     },
   });
 
+  const [currencies, setCurrencies] = useState({
+    CAD: {
+      symbol: "CA$",
+      name: "Canadian Dollar",
+      symbol_native: "$",
+      decimal_digits: 2,
+      rounding: 0,
+      code: "CAD",
+      name_plural: "Canadian dollars",
+      type: "fiat",
+      countries: ["CA"],
+    },
+    USD: {
+      symbol: "$",
+      name: "US Dollar",
+      symbol_native: "$",
+      decimal_digits: 2,
+      rounding: 0,
+      code: "USD",
+      name_plural: "US dollars",
+      type: "fiat",
+    },
+    JPY: {
+      symbol: "¥",
+      name: "Japanese Yen",
+      symbol_native: "￥",
+      decimal_digits: 0,
+      rounding: 0,
+      code: "JPY",
+      name_plural: "Japanese yen",
+      type: "fiat",
+      countries: ["JP"],
+    },
+    EUR: {
+      symbol: "€",
+      name: "Euro",
+      symbol_native: "€",
+      decimal_digits: 2,
+      rounding: 0,
+      code: "EUR",
+      name_plural: "Euros",
+      type: "fiat",
+    },
+    GBP: {
+      symbol: "£",
+      name: "British Pound Sterling",
+      symbol_native: "£",
+      decimal_digits: 2,
+      rounding: 0,
+      code: "GBP",
+      name_plural: "British pounds sterling",
+      type: "fiat",
+    },
+    KRW: {
+      symbol: "₩",
+      name: "South Korean Won",
+      symbol_native: "₩",
+      decimal_digits: 0,
+      rounding: 0,
+      code: "KRW",
+      name_plural: "South Korean won",
+      type: "fiat",
+    },
+  });
+
   const handleAmountInput = (e) => {
     setAmount(e.target.value);
-    // console.log(amount);
   };
 
   const currencyChange = (e, i) => {
     const newToCurrency = [...toCurrency];
-    newToCurrency[i] = e.target.value;
+    newToCurrency[i] = e.value;
     setToCurrency(newToCurrency);
   };
 
-  // useEffect(() => {
-  //   const getExchangeRates = async () => {
-  //     const client = new CurrencyAPI(currency_api);
-  //     const response = await client.latest({ base_currency: fromCurrency });
-  //     setExchangeRates(response.data);
-  //     console.log(response.data);
-  //   };
+  const currencyOptions = Object.keys(exchangeRates).map((exchangeRate) => ({
+    value: exchangeRate,
+    label: (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          backgroundColor: "inherit",
+        }}
+      >
+        <CurrencyFlag currency={exchangeRate} size="lg" />
+        <span
+          style={{
+            marginLeft: 8,
+            color: "#fff",
+          }}
+        >
+          {exchangeRate}
+        </span>
+      </div>
+    ),
+  }));
 
-  //   getExchangeRates();
+  const customStyles = {
+    control: (provided) => ({
+      ...provided,
+      backgroundColor: "inherit",
+      border: "none",
+      boxShadow: "none",
+      "&:hover": {
+        borderColor: "inherit",
+      },
+    }),
+    menu: (provided) => ({
+      ...provided,
+      backgroundColor: "#0f172a",
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isSelected ? "#0052CC" : "inherit",
+      color: "inherit",
+      "&:hover": {
+        backgroundColor: "#0052CC", // or any hover color you prefer
+      },
+    }),
+    input: (provided) => ({
+      ...provided,
+      color: "white",
+    }),
+    dropdownIndicator: (provided) => ({
+      ...provided,
+      color: "white",
+    }),
+    indicatorSeparator: () => ({
+      display: "none",
+    }),
+  };
+
+  // useEffect(() => {
+  //   const client = new CurrencyAPI(currency_api);
+  //   const getRatesAndCurrencies = async () => {
+  //     try {
+  //       const [exchangeRateResponse, currenciesResponse] = await Promise.all([
+  //         client.latest({ base_currency: fromCurrency }),
+  //         client.currencies(),
+  //       ]);
+
+  //       setExchangeRates(exchangeRateResponse.data);
+  //       setCurrencies(currenciesResponse.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  // getRatesAndCurrencies();
   // }, [fromCurrency]);
 
   return (
@@ -75,7 +205,6 @@ export default function Home() {
           {/* First container for currency to convert */}
           <div class="rounded-md border-inherit w-1/2 flex flex-col p-2 bg-slate-950 h-auto">
             <p>From Currency</p>
-            <CurrencyFlag currency={fromCurrency} />
             <input
               placeholder={0}
               value={amount}
@@ -83,46 +212,40 @@ export default function Home() {
               type="number"
               class="bg-inherit text-6xl border-0 text-emerald-500 outline-none text-center grow"
             />
-            <select
-              class="bg-inherit border-0 outline-none max-w-16 self-end mt-auto"
-              onChange={(e) => setFromCurrency(e.target.value)}
-            >
-              {Object.keys(exchangeRates).map((exchangeRate) => (
-                <option
-                  key={exchangeRate}
-                  value={exchangeRate}
-                  selected={exchangeRate === fromCurrency}
-                >
-                  {exchangeRate}
-                </option>
-              ))}
-            </select>
+            <Select
+              value={currencyOptions.find(
+                (option) => option.value === fromCurrency
+              )}
+              options={currencyOptions}
+              onChange={(selectedOption) =>
+                setFromCurrency(selectedOption.value)
+              }
+              styles={customStyles}
+            />
           </div>
           {/* Second container displaying all currency conversions */}
           <div class="w-1/2 p-2 rounded-md bg-slate-950">
             <p>To Currency</p>
             {toCurrency.map((currency, i) => (
-              <div key={i} class="flex gap-2 bg-inherit">
-                <p class="text-green-400 font-bold text-xl">
+              <div
+                key={i}
+                class="flex gap-2 bg-inherit items-center justify-between"
+              >
+                <p class="text-green-400 font-bold text-xl overflow-hidden whitespace-nowrap text-ellipsis">
+                  {currencies[currency].symbol}{" "}
                   {Math.round(
                     !amount ? 0 : amount * exchangeRates[currency].value * 100
                   ) / 100}
                 </p>
-                <CurrencyFlag currency={currency} />
-                <select
-                  class="bg-inherit border-0 outline-none max-w-16"
+                <Select
+                  value={currencyOptions.find(
+                    (option) => option.value === toCurrency[i]
+                  )}
+                  options={currencyOptions}
                   onChange={(event) => currencyChange(event, i)}
-                >
-                  {Object.keys(exchangeRates).map((exchangeRate) => (
-                    <option
-                      key={exchangeRate}
-                      value={exchangeRate}
-                      selected={exchangeRate === currency}
-                    >
-                      {exchangeRate}
-                    </option>
-                  ))}
-                </select>
+                  styles={customStyles}
+                  className="min-w-40"
+                />
               </div>
             ))}
           </div>
