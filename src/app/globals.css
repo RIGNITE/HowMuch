@@ -5,6 +5,7 @@
 :root {
   --background-primary: #0f172a;
   --text-primary: #fafaf9;
+  --text-secondary: rgb(16 185 129);
 }
 
 body {
@@ -13,12 +14,45 @@ body {
   font-weight: 500;
 }
 
-to-currency-container {
-  background: rgba(159, 159, 159, 0.74);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(7.5px);
-  -webkit-backdrop-filter: blur(7.5px);
+input {
+  border-width: 0; 
+  background-color: inherit;
+  outline-style: none; 
+  font-size: 3.75rem;
+  line-height: 1; 
+  text-align: center; 
+  flex-grow: 1;
+  color: var(--text-secondary);
+}
+
+.main-container {
+  display: flex;
+  gap: 1rem; 
+  width: 100%; 
+}
+
+.from-currency-container {
+  display: flex; 
+  background-color: rgb(2 6 23);
+  padding: 0.5rem; 
+  flex-direction: column; 
+  border-radius: 0.375rem; 
+  width: 50%; 
+  height: auto; 
+}
+
+.to-currency-container {
+  padding: 0.5rem; 
+  border-radius: 0.375rem; 
+  width: 50%; 
+  background-color: rgb(2 6 23);
+}
+
+.to-currency--row {
+  display: flex; 
+  gap: 0.5rem; 
+  justify-content: space-between; 
+  align-items: center; 
 }
 
 @layer base {
@@ -26,5 +60,17 @@ to-currency-container {
   input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  body {
+    font-size: 16px;
+  }
+  
+  .main-container {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
 }

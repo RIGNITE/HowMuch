@@ -201,16 +201,15 @@ export default function Home() {
           Exchange rate application for currency conversion
         </p>
         {/* Main container */}
-        <div class="flex gap-4 w-full">
+        <div class="main-container">
           {/* First container for currency to convert */}
-          <div class="rounded-md border-inherit w-1/2 flex flex-col p-2 bg-slate-950 h-auto">
+          <div class="from-currency-container">
             <p>From Currency</p>
             <input
               placeholder={0}
               value={amount}
               onChange={handleAmountInput}
               type="number"
-              class="bg-inherit text-6xl border-0 text-emerald-500 outline-none text-center grow"
             />
             <Select
               value={currencyOptions.find(
@@ -224,13 +223,10 @@ export default function Home() {
             />
           </div>
           {/* Second container displaying all currency conversions */}
-          <div class="w-1/2 p-2 rounded-md bg-slate-950">
+          <div class="to-currency-container">
             <p>To Currency</p>
             {toCurrency.map((currency, i) => (
-              <div
-                key={i}
-                class="flex gap-2 bg-inherit items-center justify-between"
-              >
+              <div key={i} class="to-currency--row ">
                 <p class="text-green-400 font-bold text-xl overflow-hidden whitespace-nowrap text-ellipsis">
                   {currencies[currency].symbol}{" "}
                   {Math.round(
