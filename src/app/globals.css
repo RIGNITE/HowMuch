@@ -25,6 +25,13 @@ input {
   color: var(--text-secondary);
 }
 
+.header {
+  display: flex; 
+  gap: 1.25rem; 
+  justify-content: center; 
+  align-items: center; 
+}
+
 .small-text {
   margin-top: 1rem;
   margin-bottom: 1rem; 
@@ -113,6 +120,11 @@ input {
 
   .to-currency-container {
     width: 80%;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: none;
   }
 
 }

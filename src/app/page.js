@@ -4,6 +4,7 @@ import { currency_api } from "../../currency_api";
 import CurrencyAPI from "@everapi/currencyapi-js";
 import CurrencyFlag from "react-currency-flags";
 import Select from "react-select";
+import Image from "next/image";
 import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 export default function Home() {
@@ -197,7 +198,10 @@ export default function Home() {
   return (
     <div class="container">
       <div class="main-container">
-        <h1 class="text-3xl">How Much</h1>
+        <div class="header">
+          <Image src="/logo.png" width={150} height={150} alt="logo" />
+          <h1 class="text-3xl">How Much</h1>
+        </div>
         {/* Main container */}
         <p class="small-text">
           Exchange rate application for currency conversion
