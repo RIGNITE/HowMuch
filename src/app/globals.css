@@ -62,7 +62,8 @@ input {
 .content-container {
   display: flex;
   gap: 1rem; 
-  width: 100%; 
+  width: 800px;
+  max-width: 100%; 
 }
 
 .from-currency-container {
@@ -72,7 +73,7 @@ input {
   flex-direction: column; 
   border-radius: 0.375rem; 
   width: 50%; 
-  max-width: 42rem;
+  max-width: 50%;
   height: auto; 
 }
 
@@ -80,7 +81,7 @@ input {
   padding: 0.5rem; 
   border-radius: 0.375rem; 
   width: 50%; 
-  max-width: 42rem;
+  max-width: 50%;
   background-color: rgb(2 6 23);
 }
 
@@ -89,6 +90,16 @@ input {
   gap: 0.5rem; 
   justify-content: space-between; 
   align-items: center; 
+}
+
+.to-currency--text {
+  overflow: hidden; 
+  font-size: 1.25rem;
+  line-height: 1.75rem; 
+  font-weight: 700; 
+  color: rgb(74 222 128);
+  text-overflow: ellipsis; 
+  white-space: nowrap; 
 }
 
 @layer base {
@@ -116,10 +127,18 @@ input {
 
   .from-currency-container {
     width: 80%;
+    max-width: 80%;
   }
 
   .to-currency-container {
     width: 80%;
+    max-width: 80%;
+  }
+
+  .to-currency--text {
+    font-size: 1rem;
+    line-height: 1.25rem; 
+    font-weight: 500; 
   }
 
   .header {

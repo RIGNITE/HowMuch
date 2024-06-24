@@ -177,29 +177,29 @@ export default function Home() {
     }),
   };
 
-  // useEffect(() => {
-  //   const client = new CurrencyAPI(currency_api);
-  //   const getRatesAndCurrencies = async () => {
-  //     try {
-  //       const [exchangeRateResponse, currenciesResponse] = await Promise.all([
-  //         client.latest({ base_currency: fromCurrency }),
-  //         client.currencies(),
-  //       ]);
+  useEffect(() => {
+    const client = new CurrencyAPI(currency_api);
+    const getRatesAndCurrencies = async () => {
+      try {
+        const [exchangeRateResponse, currenciesResponse] = await Promise.all([
+          client.latest({ base_currency: fromCurrency }),
+          client.currencies(),
+        ]);
 
-  //       setExchangeRates(exchangeRateResponse.data);
-  //       setCurrencies(currenciesResponse.data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  // getRatesAndCurrencies();
-  // }, [fromCurrency]);
+        setExchangeRates(exchangeRateResponse.data);
+        setCurrencies(currenciesResponse.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getRatesAndCurrencies();
+  }, [fromCurrency]);
 
   return (
     <div class="container">
       <div class="main-container">
         <div class="header">
-          <Image src="/logo.png" width={150} height={150} alt="logo" />
+          <Image src="/logo.png" width={120} height={120} alt="logo" />
           <h1 class="text-3xl">How Much</h1>
         </div>
         {/* Main container */}
@@ -232,7 +232,7 @@ export default function Home() {
             <p>To Currency</p>
             {toCurrency.map((currency, i) => (
               <div key={i} class="to-currency--row ">
-                <p class="text-green-400 font-bold text-xl overflow-hidden whitespace-nowrap text-ellipsis">
+                <p class="to-currency--text">
                   {currencies[currency].symbol}{" "}
                   {Math.round(
                     !amount ? 0 : amount * exchangeRates[currency].value * 100
@@ -245,14 +245,14 @@ export default function Home() {
                   options={currencyOptions}
                   onChange={(event) => currencyChange(event, i)}
                   styles={customStyles}
-                  className="min-w-40"
+                  className="min-w-36"
                 />
               </div>
             ))}
           </div>
         </div>
       </div>
-      <footer class="flex justify-between w-10/12 mx-10 text-neutral-500">
+      <footer class="flex justify-between w-10/12 mx-10 text-neutral-500 mt-10">
         <p class="text-center text-sm mt-4">© Ryan Kim 2024</p>
         <div class="flex justify-center align-middle gap-2">
           <a
