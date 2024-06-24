@@ -4,6 +4,7 @@ import { currency_api } from "../../currency_api";
 import CurrencyAPI from "@everapi/currencyapi-js";
 import CurrencyFlag from "react-currency-flags";
 import Select from "react-select";
+import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 export default function Home() {
   const [amount, setAmount] = useState();
@@ -194,14 +195,14 @@ export default function Home() {
   // }, [fromCurrency]);
 
   return (
-    <div class="flex items-center my-5 flex-col">
-      <div class="flex items-center flex-col max-w-2xl">
+    <div class="container">
+      <div class="main-container">
         <h1 class="text-3xl">How Much</h1>
-        <p class="text-lg my-2">
+        {/* Main container */}
+        <p class="small-text">
           Exchange rate application for currency conversion
         </p>
-        {/* Main container */}
-        <div class="main-container">
+        <div class="content-container">
           {/* First container for currency to convert */}
           <div class="from-currency-container">
             <p>From Currency</p>
@@ -247,6 +248,23 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <footer class="flex justify-between w-10/12 mx-10 text-neutral-500">
+        <p class="text-center text-sm mt-4">© Ryan Kim 2024</p>
+        <div class="flex justify-center align-middle gap-2">
+          <a
+            href="https://www.linkedin.com/in/ryan-kim-26445414b/"
+            target="_blank"
+          >
+            <FaLinkedin size={28} />
+          </a>
+          <a href="https://github.com/RIGNITE" target="_blank">
+            <FaGithub size={28} />
+          </a>
+          <a href="https://www.instagram.com/k.im_ryan/" target="_blank">
+            <FaInstagram size={28} />
+          </a>
+        </div>
+      </footer>
     </div>
   );
 }
