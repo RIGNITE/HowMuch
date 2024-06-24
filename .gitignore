@@ -36,4 +36,4 @@ yarn-error.log*
 next-env.d.ts
 
 # Ignore the API key file
-currency_api.js
+.env

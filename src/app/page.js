@@ -1,13 +1,16 @@
 "use client";
 import { useState, useEffect } from "react";
-import { currency_api } from "../../currency_api";
 import CurrencyAPI from "@everapi/currencyapi-js";
 import CurrencyFlag from "react-currency-flags";
 import Select from "react-select";
 import Image from "next/image";
 import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
+require("dotenv").config();
 
 export default function Home() {
+  // API key for currency conversion
+  const currency_api = process.env.CURRENCY_API;
+
   const [amount, setAmount] = useState();
   const [fromCurrency, setFromCurrency] = useState("CAD");
   const [toCurrency, setToCurrency] = useState([

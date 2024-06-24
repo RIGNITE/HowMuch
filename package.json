@@ -11,6 +11,7 @@
   "dependencies": {
     "@everapi/currencyapi-js": "^1.0.6",
     "currency-flags": "^4.0.7",
+    "dotenv": "^16.4.5",
     "next": "14.2.3",
     "react": "^18",
     "react-currency-flags": "^0.1.2",
