@@ -8,9 +8,6 @@ import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 require("dotenv").config();
 
 export default function Home() {
-  // API key for currency conversion
-  const currency_api = process.env.CURRENCY_API;
-
   const [amount, setAmount] = useState();
   const [fromCurrency, setFromCurrency] = useState("CAD");
   const [toCurrency, setToCurrency] = useState([
@@ -181,7 +178,8 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const client = new CurrencyAPI(currency_api);
+    const client = new CurrencyAPI(process.env.NEXT_PUBLIC_CURRENCY_API);
+    console.log(`${process.env.CURRENCY_API}`);
     const getRatesAndCurrencies = async () => {
       try {
         const [exchangeRateResponse, currenciesResponse] = await Promise.all([
